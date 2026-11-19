@@ -307,12 +307,29 @@ private slots:
         QTRY_COMPARE(theme.radius(), 6);
     }
 
-    void translatorFallsBackToEnglish()
+    void translatorFollowsTheSystemWithoutOmarchy()
     {
         QTemporaryDir dir;
         Translator translator(dir.path() + "/language", dir.path());
-        QCOMPARE(translator.language(), QString("en"));
+        QCOMPARE(translator.language(), Translator::systemLanguage());
         QVERIFY(translator.translate("Main", "Save").isNull());
+        QCOMPARE(Translator::readLanguage(dir.path() + "/language", "de"), QString("de"));
+        write(dir.path() + "/garbage", "not a language\n");
+        QCOMPARE(Translator::readLanguage(dir.path() + "/garbage", "da"), QString("da"));
+        // Omarchy's pick wins over the system's.
+        write(dir.path() + "/language", "da\n");
+        QCOMPARE(Translator::readLanguage(dir.path() + "/language", "de"), QString("da"));
+    }
+
+    void systemLocalesMapToOmarchyLanguages()
+    {
+        QCOMPARE(Translator::languageFor(QLocale("de_DE")), QString("de"));
+        QCOMPARE(Translator::languageFor(QLocale("de_AT")), QString("de"));
+        QCOMPARE(Translator::languageFor(QLocale("pt_BR")), QString("pt-BR"));
+        QCOMPARE(Translator::languageFor(QLocale("pt_PT")), QString("pt"));
+        QCOMPARE(Translator::languageFor(QLocale("zh_TW")), QString("zh-TW"));
+        QCOMPARE(Translator::languageFor(QLocale("ru_RU")), QString("ru"));
+        QCOMPARE(Translator::languageFor(QLocale::c()), QString("en"));
     }
 
     void translatorFollowsTheLanguageFile()

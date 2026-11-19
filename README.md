@@ -6,7 +6,8 @@ you want.
 
 ![Flip](docs/screenshot.png)
 
-Flip follows the Omarchy theme and language live, and is driven from the
+Flip follows the Omarchy theme and language live (elsewhere, the system
+language), and is driven from the
 keyboard. Press `?` in the app for every shortcut.
 
 ## Shortcuts
@@ -32,7 +33,7 @@ keyboard. Press `?` in the app for every shortcut.
 | Ctrl+S / Ctrl+Shift+S | Save / save as |
 | Ctrl+E | Export GIF or MP4 |
 | ? | Show or hide the shortcuts |
-| Q | Quit, asking first if there are unsaved drawings |
+| Q / Ctrl+Q | Quit, asking first if there are unsaved drawings |
 
 ## Command line
 

@@ -26,7 +26,12 @@ public:
     QString translate(const char *context, const char *sourceText, const char *disambiguation = nullptr,
                       int n = -1) const override;
 
-    static QString readLanguage(const QString &path);
+    // Omarchy's pick wins; without it (another desktop, or a sandbox that
+    // can't see it) the system locale decides, then English.
+    static QString readLanguage(const QString &path, const QString &fallback = systemLanguage());
+    static QString systemLanguage() { return languageFor(QLocale::system()); }
+    // A locale as one of Omarchy's language codes: pt_BR is pt-BR, de_AT is de.
+    static QString languageFor(const QLocale &locale);
     static QString pluralCategory(const QString &language, long long count);
     static QLocale formatLocale(const QString &language);
 

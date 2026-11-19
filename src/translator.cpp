@@ -21,14 +21,28 @@ Translator::Translator(const QString &languageFile, const QString &catalogDirect
     reload();
 }
 
-// One registry code on the first line; anything else, or no file, is English.
-QString Translator::readLanguage(const QString &path) {
+// One registry code on the first line; anything else, or no file, is the
+// fallback.
+QString Translator::readLanguage(const QString &path, const QString &fallback) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
-        return "en";
+        return fallback;
     const QString code = QString::fromUtf8(file.readLine()).trimmed();
     static const QRegularExpression valid("^[a-z]{2,3}(-[A-Za-z]{2})?$");
-    return valid.match(code).hasMatch() ? code : "en";
+    return valid.match(code).hasMatch() ? code : fallback;
+}
+
+QString Translator::languageFor(const QLocale &locale) {
+    // The C and POSIX locales mean nobody picked a language.
+    if (locale.language() == QLocale::C || locale.language() == QLocale::AnyLanguage)
+        return "en";
+    const QString name = locale.name();
+    // Only these regions are languages of their own in Omarchy's registry;
+    // everywhere else the base language's catalog and plural rules apply.
+    const QString regional = QString(name).replace('_', '-');
+    if (QStringList{"pt-BR", "zh-CN", "zh-TW", "es-MX"}.contains(regional))
+        return regional;
+    return name.section('_', 0, 0);
 }
 
 // CLDR cardinal plural categories for whole counts, for Omarchy's languages

@@ -66,7 +66,8 @@ ApplicationWindow {
 
     Shortcut { sequences: ["?", "Shift+?"]; context: Qt.ApplicationShortcut; onActivated: win.helpVisible = !win.helpVisible }
     Shortcut { sequence: "Escape"; context: Qt.ApplicationShortcut; enabled: win.helpVisible; onActivated: win.helpVisible = false }
-    Shortcut { sequence: "Q"; context: Qt.ApplicationShortcut; enabled: !win.modal; onActivated: win.whenSafe("quit") }
+    // Q is Omarchy's habit; Ctrl+Q is every other desktop's.
+    Shortcut { sequences: ["Q", "Ctrl+Q"]; context: Qt.ApplicationShortcut; enabled: !win.modal; onActivated: win.whenSafe("quit") }
     Shortcut { sequence: "Space"; context: Qt.ApplicationShortcut; enabled: !win.modal; onActivated: backend.togglePlay() }
     Shortcut { sequences: [StandardKey.Undo]; context: Qt.ApplicationShortcut; enabled: !win.modal; onActivated: backend.undo() }
     Shortcut { sequences: ["Ctrl+Shift+Z", "Ctrl+Y"]; context: Qt.ApplicationShortcut; enabled: !win.modal; onActivated: backend.redo() }

@@ -32,7 +32,7 @@ Rectangle {
         ["Ctrl+Shift+S", qsTr("Save as")],
         ["Ctrl+E", qsTr("Export GIF or MP4")],
         ["?", qsTr("Show or hide these shortcuts")],
-        ["Q", qsTr("Quit")]
+        ["Q / Ctrl+Q", qsTr("Quit")]
     ]
 
     MouseArea {
