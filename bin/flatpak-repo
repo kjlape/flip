@@ -56,6 +56,12 @@ fi
 
 REPO="$PAGES/repo"
 [ -d "$REPO/objects" ] || ostree --repo="$REPO" init --mode=archive-z2
+# Git keeps no empty directories, so a repository restored from gh-pages
+# lacks the ones OSTree expects; its lock and scratch space stay out of git.
+for directory in refs/heads refs/remotes refs/mirrors tmp state extensions; do
+  mkdir -p "$REPO/$directory"
+done
+printf '/repo/.lock\n/repo/tmp/\n/repo/state/\n' >"$PAGES/.gitignore"
 REF="$(ostree --repo="$ROOT/flatpak/repo" refs | grep "^app/$APP/" | head -1)"
 [ -n "$REF" ] || die "the build made no app/$APP ref."
 flatpak build-commit-from --src-repo="$ROOT/flatpak/repo" --gpg-sign="$KEY" \
