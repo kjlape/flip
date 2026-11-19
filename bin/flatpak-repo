@@ -34,15 +34,20 @@ PAGES="$ROOT/build/pages"
 has_remote_pages() {
   git remote get-url origin >/dev/null 2>&1 && git ls-remote --exit-code origin refs/heads/gh-pages >/dev/null 2>&1
 }
+# Bookkeeping on this branch uses commands that run no git hooks, so a
+# broken global hook can't stop a publish halfway.
 if [ ! -e "$PAGES/.git" ]; then
   git worktree prune
   if has_remote_pages; then
     git fetch -q origin "+gh-pages:refs/remotes/origin/gh-pages"
-    git worktree add -q -B gh-pages "$PAGES" origin/gh-pages
+    git worktree add -q --no-checkout -B gh-pages "$PAGES" origin/gh-pages
+    git -C "$PAGES" reset -q --hard
   else
     git worktree add -q --orphan -b gh-pages "$PAGES"
   fi
-elif has_remote_pages; then
+fi
+git -C "$PAGES" symbolic-ref HEAD refs/heads/gh-pages
+if has_remote_pages; then
   git -C "$PAGES" fetch -q origin gh-pages
   git -C "$PAGES" reset -q --hard FETCH_HEAD
 fi
@@ -116,12 +121,12 @@ Source and releases are on <a href="https://github.com/$GITHUB_REPO">GitHub</a>.
 </html>
 EOF
 
-# One commit holding the current repository; its history lives in OSTree,
-# so the branch doesn't need its own.
-git -C "$PAGES" checkout -q --orphan gh-pages-next
+# One parentless commit holding the current repository; its history lives
+# in OSTree, so the branch doesn't need its own.
 git -C "$PAGES" add -A
-git -C "$PAGES" commit -qm "Publish Flip $TAG"
-git -C "$PAGES" branch -q -M gh-pages-next gh-pages
+tree="$(git -C "$PAGES" write-tree)"
+commit="$(git -C "$PAGES" commit-tree "$tree" -m "Publish Flip $TAG")"
+git -C "$PAGES" update-ref refs/heads/gh-pages "$commit"
 echo "Added $TAG to $REPO."
 
 if [ "$PUBLISH" = 0 ]; then

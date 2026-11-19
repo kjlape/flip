@@ -103,7 +103,8 @@ git remote get-url origin >/dev/null 2>&1 \
 branch="$(git branch --show-current)"
 confirm "Push $branch and $TAG to origin, and publish a GitHub release of $TAG?"
 
-git push origin "$branch" "$TAG"
+git push origin "$branch" "$TAG" \
+  || die "git push failed. If a git hook stopped it, see docs/PUBLISHING.md, \"Check that git can push\"."
 "$ROOT/bin/flatpak"
 mkdir -p "$ROOT/build"
 bundle="$ROOT/build/flip-$VERSION.flatpak"
