@@ -70,8 +70,13 @@ PY
 # against a local repository.
 lint_manifest() {
   setup_builder
-  $LINT manifest "$MANIFEST" || die "the Flathub linter found problems with $MANIFEST (above)."
-  echo "The Flathub linter passed the manifest."
+  if $LINT manifest "$MANIFEST"; then
+    echo "The Flathub linter passed the manifest."
+  elif [ "$DRY_RUN" = 1 ]; then
+    echo "warning: the Flathub linter found problems with $MANIFEST (above)." >&2
+  else
+    die "the Flathub linter found problems with $MANIFEST (above)."
+  fi
 }
 
 # A fresh clone of a GitHub repository in build/flathub, on a new branch.
@@ -92,7 +97,10 @@ case "$COMMAND" in
     write_manifest
     setup_builder
     cd "$OUT"
+    # Mirroring the screenshots into the build, as Flathub's own build does,
+    # lets the linter check them.
     $BUILDER --user --force-clean --repo=repo --install \
+      --mirror-screenshots-url=https://dl.flathub.org/media --compose-url-policy=full \
       --state-dir="${FLIP_STATE_DIR:-$ROOT/.flatpak-builder}" build-dir "$APP.yml"
     $LINT manifest "$APP.yml" || echo "warning: the linter found problems with the manifest (above)." >&2
     $LINT repo repo || echo "warning: the linter found problems with the build (above)." >&2
@@ -148,7 +156,8 @@ case "$COMMAND" in
     ;;
 
   *)
-    sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
+    # The comment at the top of this file.
+    sed -n '2,/^[^#]/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'
     exit 1
     ;;
 esac
