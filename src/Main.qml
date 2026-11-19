@@ -15,7 +15,8 @@ ApplicationWindow {
     color: "#0e0e10"
 
     Material.theme: Material.Dark
-    Material.accent: theme.accent
+    // Checked buttons, sliders, and focus rings sit on dark chrome.
+    Material.accent: theme.accentInk
     Material.roundedScale: theme.radius
 
     property bool helpVisible: false
@@ -211,7 +212,7 @@ ApplicationWindow {
         modal: true
         title: qsTr("Save changes to %1?").arg(backend.title)
         Material.roundedScale: theme.radius
-        Material.accent: theme.accent
+        Material.accent: theme.accentInk
 
         Label {
             text: qsTr("Your drawings will be lost if you don't save them.")

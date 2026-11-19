@@ -9,6 +9,7 @@ class Theme : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString accent READ accent NOTIFY changed)
     Q_PROPERTY(QString accentForeground READ accentForeground NOTIFY changed)
+    Q_PROPERTY(QString accentInk READ accentInk NOTIFY changed)
     Q_PROPERTY(int radius READ radius NOTIFY changed)
 
 public:
@@ -17,6 +18,7 @@ public:
 
     QString accent() const { return m_accent; }
     QString accentForeground() const;
+    QString accentInk() const;
     int radius() const { return m_radius; }
 
     static QString readAccent(const QString &path);

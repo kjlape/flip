@@ -81,6 +81,18 @@ QString Theme::accentForeground() const {
     return luminance > .179 ? "black" : "white";
 }
 
+// The accent as text or an outline on Flip's dark chrome. A dark accent
+// (a navy, a forest green) is lifted until it reads; a light one is kept.
+QString Theme::accentInk() const {
+    // Bright enough to carry black text is bright enough to read on dark.
+    if (accentForeground() == "black")
+        return QColor(m_accent).name();
+    QColor color(m_accent);
+    float hue, saturation, lightness, alpha;
+    color.getHslF(&hue, &saturation, &lightness, &alpha);
+    return QColor::fromHslF(hue, saturation, std::max(lightness, 0.66f), alpha).name();
+}
+
 void Theme::reload() {
     refreshRounding();
     const auto paths = m_watcher.files() + m_watcher.directories();

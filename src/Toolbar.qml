@@ -59,7 +59,7 @@ Rectangle {
                     radius: 13
                     color: "transparent"
                     border.width: 2
-                    border.color: swatch.selected ? (swatch.index === bar.inks.length - 1 ? "#ffffff" : theme.accent) : "transparent"
+                    border.color: swatch.selected ? (swatch.index === bar.inks.length - 1 ? "#ffffff" : theme.accentInk) : "transparent"
                 }
                 Rectangle {
                     anchors.centerIn: parent

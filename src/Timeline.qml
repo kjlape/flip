@@ -97,7 +97,7 @@ Rectangle {
                     radius: Math.min(4, theme.radius)
                     color: "transparent"
                     border.width: cell.current ? 3 : 1
-                    border.color: cell.current ? theme.accent : "#33333a"
+                    border.color: cell.current ? theme.accentInk : "#33333a"
 
                     Image {
                         anchors.fill: parent

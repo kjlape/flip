@@ -278,6 +278,15 @@ private slots:
         Theme theme(dir.path());
         QCOMPARE(theme.accent(), QString("#112233"));
         QCOMPARE(theme.accentForeground(), QString("white"));
+        QVERIFY(QColor(theme.accentInk()).lightnessF() >= 0.6);
+        QCOMPARE(QColor(theme.accentInk()).hslHue(), QColor("#112233").hslHue());
+    }
+
+    void lightAccentsStayAsTheyAre()
+    {
+        QTemporaryDir dir;
+        Theme theme(dir.path());
+        QCOMPARE(theme.accentInk(), QString("#ffd60a"));
     }
 
     void themeFollowsHyprlandRounding()
