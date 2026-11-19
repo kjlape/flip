@@ -1,25 +1,12 @@
 #!/bin/sh
-# Builds the Flatpak, installs it for this user, and writes a single-file
-# bundle (flip.flatpak) that installs on any Linux with Flatpak.
+# Builds the Flatpak from this checkout, installs it for this user, and
+# writes a single-file bundle (flip.flatpak) that installs on any Linux with
+# Flatpak.
 set -eu
+. "$(dirname -- "$0")/lib.sh"
 
-ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
-APP=io.github.kjlape.Flip
+setup_builder
 cd "$ROOT/flatpak"
-
-# flatpak-builder from Flathub, which also carries the Flathub linter.
-# The runtime and SDK come from the host's flatpak, which can always see
-# Flathub; the sandboxed builder sometimes can't.
-flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user -y --noninteractive flathub org.kde.Platform//6.11 org.kde.Sdk//6.11
-if command -v flatpak-builder >/dev/null; then
-  BUILDER=flatpak-builder
-else
-  flatpak install --user -y --noninteractive flathub org.flatpak.Builder
-  # In its sandbox "user" means its own data directory; point it at ours.
-  BUILDER="flatpak run --env=FLATPAK_USER_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/flatpak --command=flatpak-builder org.flatpak.Builder"
-fi
-
 $BUILDER --user --force-clean --repo=repo --install \
   --state-dir="$ROOT/.flatpak-builder" build-dir "$APP.yml"
 
