@@ -59,6 +59,22 @@ bin/test      # the Qt Test suite, offscreen
 bin/install   # makepkg -fsi, so Flip shows up in the app launcher
 ```
 
+## Flatpak
+
+`bin/flatpak` builds the Flatpak (`io.github.kjlape.Flip`, on the KDE 6.11
+runtime, with its own ffmpeg for exports), installs it for you, and writes
+`flip.flatpak`, a single file that installs on any Linux with Flatpak:
+
+```sh
+flatpak install --user flip.flatpak
+flatpak run io.github.kjlape.Flip
+```
+
+The Flatpak runs as `flatpak run io.github.kjlape.Flip <command>` for the
+command-line commands. Inside its sandbox, window corners stay square (it
+can't ask Hyprland for the rounding), and `skill install` can't write to
+your home directory.
+
 ## File format
 
 A `.flip` file is a Qt `QDataStream`: the magic `FLIP`, a format version,

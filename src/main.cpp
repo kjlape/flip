@@ -40,9 +40,11 @@ int main(int argc, char *argv[]) {
     }
 
     // Matches the window to flip.desktop, so the compositor (Wayland app_id)
-    // and the launcher pick up the installed icon.
-    app.setDesktopFileName("flip");
-    app.setWindowIcon(QIcon::fromTheme("flip"));
+    // and the launcher pick up the installed icon. The Flatpak installs them
+    // under its app ID instead and says so in FLIP_DESKTOP_FILE.
+    const QString desktopFile = qEnvironmentVariable("FLIP_DESKTOP_FILE", "flip");
+    app.setDesktopFileName(desktopFile);
+    app.setWindowIcon(QIcon::fromTheme(desktopFile));
 
     QQuickStyle::setStyle("Material");
 

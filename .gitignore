@@ -2,3 +2,7 @@
 /pkgbuild/pkg/
 /pkgbuild/src/
 *.pkg.tar.*
+/.flatpak-builder/
+/flatpak/build-dir/
+/flatpak/repo/
+*.flatpak

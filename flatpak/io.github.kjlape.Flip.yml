@@ -1,0 +1,83 @@
+# Flatpak manifest for Flip. Build and install it with bin/flatpak.
+id: io.github.kjlape.Flip
+runtime: org.kde.Platform
+runtime-version: '6.11'
+sdk: org.kde.Sdk
+command: flip
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # Follows the Omarchy theme and language, read-only. Elsewhere these paths
+  # don't exist and Flip keeps its default accent and English.
+  - --filesystem=~/.local/state/omarchy:ro
+  - --filesystem=~/.config/omarchy:ro
+  # The window's Wayland app ID, so the desktop matches it to this app's icon.
+  - --env=FLIP_DESKTOP_FILE=io.github.kjlape.Flip
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/ffmpeg
+  - /share/man
+  - '*.a'
+
+modules:
+  # The runtimes ship no ffmpeg command and no H.264 encoder, which exports
+  # need, so the app carries its own: x264 for MP4, ffmpeg for both formats.
+  - name: x264
+    config-opts:
+      - --enable-shared
+      - --disable-cli
+    sources:
+      - type: git
+        url: https://code.videolan.org/videolan/x264.git
+        commit: b35605ace3ddf7c1a5d67a2eb553f034aef41d55
+
+  - name: ffmpeg
+    config-opts:
+      - --enable-gpl
+      - --enable-libx264
+      - --enable-shared
+      - --disable-static
+      - --disable-autodetect
+      - --disable-doc
+      - --disable-ffplay
+      - --disable-ffprobe
+      - --disable-network
+      - --disable-debug
+    sources:
+      - type: archive
+        url: https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz
+        sha256: 8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e
+
+  - name: flip
+    buildsystem: simple
+    build-commands:
+      - mkdir -p build && cd build && (command -v qmake6 >/dev/null && qmake6 ../flip.pro || qmake ../flip.pro) && make -j"$FLATPAK_BUILDER_N_JOBS"
+      - install -Dm755 build/flip /app/bin/flip
+      - install -Dm644 LICENSE /app/share/licenses/io.github.kjlape.Flip/LICENSE
+      - install -Dm644 pkgbuild/flip.svg /app/share/icons/hicolor/scalable/apps/io.github.kjlape.Flip.svg
+      - install -Dm644 pkgbuild/flip.xml /app/share/mime/packages/io.github.kjlape.Flip.xml
+      - install -Dm644 flatpak/io.github.kjlape.Flip.metainfo.xml /app/share/metainfo/io.github.kjlape.Flip.metainfo.xml
+      # The Arch package's launcher entry, renamed to the app ID.
+      - sed -e 's/^Icon=flip$/Icon=io.github.kjlape.Flip/' -e 's/^StartupWMClass=flip$/StartupWMClass=io.github.kjlape.Flip/'
+        pkgbuild/flip.desktop > io.github.kjlape.Flip.desktop
+      - install -Dm644 io.github.kjlape.Flip.desktop /app/share/applications/io.github.kjlape.Flip.desktop
+    sources:
+      # Builds this checkout. For Flathub, replace with the release:
+      #   - type: git
+      #     url: https://github.com/kjlape/flip.git
+      #     tag: v0.1.0
+      #     commit: <the tag's commit>
+      - type: dir
+        path: ..
+        skip:
+          - build
+          - flatpak/build-dir
+          - flatpak/repo
+          - .flatpak-builder
+          - pkgbuild/pkg
+          - pkgbuild/src

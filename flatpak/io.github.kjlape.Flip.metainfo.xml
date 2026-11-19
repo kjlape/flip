@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.kjlape.Flip</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Flip</name>
+  <summary>Draw frame by frame and play it back as an animation</summary>
+  <developer id="io.github.kjlape">
+    <name>Kaleb Lape</name>
+  </developer>
+  <description>
+    <p>
+      Flip is a flipbook for your desktop. Draw on a frame, add the next one,
+      and see the frames around it faintly underneath while you draw. Press
+      Space to play it back, then export a looping GIF or an MP4.
+    </p>
+    <ul>
+      <li>Pen and eraser in nine inks, with an adjustable brush</li>
+      <li>Onion skin: the previous frame in red, the next in green</li>
+      <li>Add, duplicate, reorder, clear, and delete frames, with undo</li>
+      <li>Play back at 1 to 60 frames per second</li>
+      <li>Export looping GIFs and MP4 videos</li>
+      <li>Driven from the keyboard; press ? for every shortcut</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.kjlape.Flip.desktop</launchable>
+  <provides>
+    <binary>flip</binary>
+    <mediatype>application/x-flip-animation</mediatype>
+  </provides>
+  <url type="homepage">https://github.com/kjlape/flip</url>
+  <url type="bugtracker">https://github.com/kjlape/flip/issues</url>
+  <url type="vcs-browser">https://github.com/kjlape/flip</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Drawing a bouncing ball with the onion skin on</caption>
+      <image>https://raw.githubusercontent.com/kjlape/flip/v0.1.0/docs/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Graphics</category>
+    <category>2DGraphics</category>
+  </categories>
+  <keywords>
+    <keyword>animation</keyword>
+    <keyword>flipbook</keyword>
+    <keyword>draw</keyword>
+    <keyword>gif</keyword>
+  </keywords>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <branding>
+    <color type="primary" scheme_preference="light">#ffd60a</color>
+    <color type="primary" scheme_preference="dark">#7a6500</color>
+  </branding>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-11-19">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>
