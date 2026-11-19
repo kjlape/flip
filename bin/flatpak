@@ -8,7 +8,7 @@ set -eu
 setup_builder
 cd "$ROOT/flatpak"
 $BUILDER --user --force-clean --repo=repo --install \
-  --state-dir="$ROOT/.flatpak-builder" build-dir "$APP.yml"
+  --state-dir="${FLIP_STATE_DIR:-$ROOT/.flatpak-builder}" build-dir "$APP.yml"
 
 # Installs pull the KDE runtime from Flathub on their own.
 flatpak build-bundle --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo \

@@ -67,9 +67,7 @@ modules:
         pkgbuild/flip.desktop > io.github.kjlape.Flip.desktop
       - install -Dm644 io.github.kjlape.Flip.desktop /app/share/applications/io.github.kjlape.Flip.desktop
     sources:
-      # Builds this checkout. bin/flathub swaps the lines between the
-      # markers for the release's git source (url, tag, and commit).
-      # BEGIN local source
+      # Builds this checkout.
       - type: dir
         path: ..
         skip:
@@ -79,4 +77,3 @@ modules:
           - .flatpak-builder
           - pkgbuild/pkg
           - pkgbuild/src
-      # END local source

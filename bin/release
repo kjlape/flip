@@ -129,4 +129,4 @@ EOF
 } >"$notes_file"
 
 gh release create "$TAG" "$bundle" --repo "$GITHUB_REPO" --title "Flip $VERSION" --notes-file "$notes_file"
-echo "Published $TAG. For Flathub, run: bin/flathub update $TAG   (or bin/flathub submit $TAG the first time)"
+echo "Published $TAG. Update the Flatpak repository with: bin/flatpak-repo --publish"

@@ -1,10 +1,11 @@
-# Shared by bin/flatpak, bin/release, and bin/flathub. Sourced, not run.
+# Shared by bin/flatpak, bin/release, and bin/flatpak-repo. Sourced, not run.
 
 ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 APP=io.github.kjlape.Flip
 GITHUB_REPO=kjlape/flip
-# Overridable so the scripts can be rehearsed against a local bare repo.
-GIT_URL="${FLIP_GIT_URL:-https://github.com/$GITHUB_REPO.git}"
+# Where GitHub Pages serves the Flatpak repository; overridable so
+# bin/flatpak-repo can be rehearsed against a local web server.
+PAGES_URL="${FLIP_PAGES_URL:-https://kjlape.github.io/flip}"
 FLATHUB_RUNTIME=org.kde.Platform//6.11
 FLATHUB_SDK=org.kde.Sdk//6.11
 
