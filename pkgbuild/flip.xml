@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-flip-animation">
+    <comment>Flip animation</comment>
+    <magic priority="60">
+      <match type="string" offset="0" value="FLIP"/>
+    </magic>
+    <glob pattern="*.flip"/>
+  </mime-type>
+</mime-info>

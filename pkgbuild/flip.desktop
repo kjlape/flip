@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Flip
+Name[da]=Flip
+Name[de]=Flip
+Comment=Draw frame by frame and play it back as an animation
+Comment[da]=Tegn billede for billede, og afspil det som en animation
+Comment[de]=Bild für Bild zeichnen und als Animation abspielen
+Exec=flip open %f
+Icon=flip
+Terminal=false
+Categories=Graphics;2DGraphics;
+MimeType=application/x-flip-animation;
+Keywords=animation;flipbook;draw;gif;
+StartupWMClass=flip
