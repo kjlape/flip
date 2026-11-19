@@ -62,19 +62,23 @@ bin/install   # makepkg -fsi, so Flip shows up in the app launcher
 
 ## Flatpak
 
-`bin/flatpak` builds the Flatpak (`io.github.kjlape.Flip`, on the KDE 6.11
-runtime, with its own ffmpeg for exports), installs it for you, and writes
-`flip.flatpak`, a single file that installs on any Linux with Flatpak:
+Flip installs on any Linux with Flatpak:
 
 ```sh
-flatpak install --user flip.flatpak
-flatpak run io.github.kjlape.Flip
+flatpak install --user https://kjlape.github.io/flip/io.github.kjlape.Flip.flatpakref
 ```
 
-The Flatpak runs as `flatpak run io.github.kjlape.Flip <command>` for the
-command-line commands. Inside its sandbox, window corners stay square (it
-can't ask Hyprland for the rounding), and `skill install` can't write to
-your home directory.
+Updates arrive with `flatpak update`. Each [release](https://github.com/kjlape/flip/releases)
+also has a single-file `flip-<version>.flatpak`.
+
+In the Flatpak, the command-line commands run as `flatpak run
+io.github.kjlape.Flip <command>`. Window corners stay square, because the
+sandbox can't ask Hyprland for its rounding, and `skill install` can't
+write to your home directory.
+
+`bin/flatpak` builds and installs it from this checkout. Releases are
+published with `bin/release` and `bin/flatpak-repo`; see
+[docs/PUBLISHING.md](docs/PUBLISHING.md).
 
 ## File format
 
