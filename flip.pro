@@ -3,7 +3,7 @@ QT += core gui concurrent qml quick quickcontrols2 dbus
 CONFIG += c++17 release
 TARGET = flip
 TEMPLATE = app
-DEFINES += FLIP_VERSION=\\\"0.1.0\\\"
+DEFINES += FLIP_VERSION=\\\"0.1.1\\\"
 
 HEADERS += \
     src/backend.h \

@@ -34,7 +34,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>Drawing a bouncing ball with the onion skin on</caption>
-      <image>https://raw.githubusercontent.com/kjlape/flip/v0.1.0/docs/screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kjlape/flip/v0.1.1/docs/screenshot.png</image>
     </screenshot>
   </screenshots>
   <categories>
@@ -60,6 +60,11 @@
   </branding>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.1.1" date="2026-11-22">
+      <description>
+        <p>Saving and opening long animations is much faster.</p>
+      </description>
+    </release>
     <release version="0.1.0" date="2026-11-19">
       <description>
         <p>First release.</p>

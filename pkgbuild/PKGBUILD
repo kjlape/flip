@@ -1,5 +1,5 @@
 pkgname=flip
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc='Draw frame by frame and play it back as an animation'
 arch=('x86_64' 'aarch64')
