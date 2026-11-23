@@ -1,0 +1,10 @@
+[core]
+repo_version=1
+mode=archive-z2
+indexed-deltas=true
+
+[flatpak]
+title=Flip
+comment=Draw frame by frame and play it back as an animation
+homepage=https://github.com/kjlape/flip
+icon=https://kjlape.github.io/flip/flip.svg
