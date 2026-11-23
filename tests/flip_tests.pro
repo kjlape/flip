@@ -1,4 +1,4 @@
-QT += core gui quick quickcontrols2 testlib dbus
+QT += core gui concurrent quick quickcontrols2 testlib dbus
 CONFIG += c++17 testcase
 TARGET = flip_tests
 TEMPLATE = app
