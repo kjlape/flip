@@ -1,4 +1,4 @@
-pkgname=flip
+pkgname=lape-flip
 pkgver=0.1.1
 pkgrel=1
 pkgdesc='Draw frame by frame and play it back as an animation'
@@ -6,6 +6,9 @@ arch=('x86_64' 'aarch64')
 license=('MIT')
 depends=('qt6-base' 'qt6-declarative' 'qt6-wayland' 'xdg-desktop-portal' 'ffmpeg')
 makedepends=('gcc' 'make')
+# Renamed from flip; replaces moves machines with the old package over.
+conflicts=('flip')
+replaces=('flip')
 source=()
 sha256sums=()
 
